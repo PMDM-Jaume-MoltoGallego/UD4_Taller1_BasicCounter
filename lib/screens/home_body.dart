@@ -7,10 +7,59 @@ class HomeBody extends StatefulWidget{
   State<HomeBody> createState() => _HomeBodyState();
 }
 
-class _HomeBodyState extends State<HomeBody>{
+//TODO ACT5 Fusionamos las dos clases, añadimos las funcionalidades de WidgetsBindingObserver a nuestra clase
+class _HomeBodyState extends State<HomeBody> with WidgetsBindingObserver{
   int _counter = 0;
   double _fonstSize = 24.0;
 
+  //TODO ACT5 Ciclo de vida Widget
+  @override
+  void initState() {
+    super.initState();
+
+    debugPrint("Widget inicializado");
+    WidgetsBinding.instance.addObserver(this);
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    debugPrint("didChangeDependencies()");
+  }
+
+  @override
+  void didUpdateWidget(covariant HomeBody oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    debugPrint("didUpdateWidget() Widget actualizado");
+  }
+
+  @override
+  void dispose() {
+    debugPrint("dispose() Widget eliminando");
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  //TODO ACT5 Ciclo de vida Aplicación
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    switch (state) {
+      case AppLifecycleState.inactive:
+        debugPrint("App inactive()");
+        break;
+      case AppLifecycleState.paused:
+        debugPrint("App paused()");
+        break;
+      case AppLifecycleState.resumed:
+        debugPrint("App resumed()");
+        break;
+      case AppLifecycleState.detached:
+        debugPrint("App detached()");
+        break;
+      default:
+        debugPrint("App hidden()");
+    }
+  }
   //TODO ACT2 Cambiamos el "layout" conforme se nos pide en la act2
   @override
   Widget build(BuildContext context){
